@@ -1,6 +1,6 @@
 /**
  * Tangol API Documentation SOAP
- * This a documentation for web service WSDL from Tangol Tours SRL, Argentina
+ * This a documentation for web service WSDL from Tangol Tours SRL, Argentina SoapUI - https://www.tangol.com/webservices/tangoltours.svc?wsdl
  *
  * OpenAPI spec version: 1.0.0
  * 
