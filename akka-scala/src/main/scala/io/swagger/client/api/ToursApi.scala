@@ -15,14 +15,12 @@ import io.swagger.client.model.GetTourCountries
 import io.swagger.client.model.GetTourCountriesResult
 import io.swagger.client.model.GetTourDestination
 import io.swagger.client.model.GetTourDestinationsResult
-import io.swagger.client.model.GetTourDetails
-import io.swagger.client.model.GetTourDetaisResult
+import io.swagger.client.model.GetTourDetailsResult
 import io.swagger.client.model.GetTourListByDestination
 import io.swagger.client.model.GetTourListByFilters
 import io.swagger.client.model.GetTourListByFiltersResult
 import io.swagger.client.model.GetTourQuotation
 import io.swagger.client.model.GetTourQuotationResult
-import io.swagger.client.model.GetTourRates
 import io.swagger.client.model.GetTourRatesResult
 import io.swagger.client.core._
 import io.swagger.client.core.CollectionFormats._
@@ -58,14 +56,16 @@ object ToursApi {
    * Obtiene los detalles de un tour en particular
    * 
    * Expected answers:
-   *   code 200 : GetTourDetaisResult (successful operation)
+   *   code 200 : GetTourDetailsResult (successful operation)
    * 
-   * @param body Variables para la request
+   * @param id tour id
+   * @param authorization Bearer &#39;token&#39;
    */
-  def getTourDetails(body: GetTourDetails): ApiRequest[GetTourDetaisResult] =
-    ApiRequest[GetTourDetaisResult](ApiMethods.POST, "https://virtserver.swaggerhub.com/tangol/Tangol/1.0.0", "/GetTourDetails", "application/xml")
-      .withBody(body)
-      .withSuccessResponse[GetTourDetaisResult](200)
+  def getTourDetails(id: String, authorization: String): ApiRequest[GetTourDetailsResult] =
+    ApiRequest[GetTourDetailsResult](ApiMethods.POST, "https://virtserver.swaggerhub.com/tangol/Tangol/1.0.0", "/GetTourDetails/{id}", "application/json")
+      .withPathParam("id", id)
+      .withHeaderParam("Authorization", authorization)
+      .withSuccessResponse[GetTourDetailsResult](200)
         /**
    * 
    * 
@@ -108,11 +108,11 @@ object ToursApi {
    * Expected answers:
    *   code 200 : GetTourRatesResult (succeful operation)
    * 
-   * @param body Variables for request
+   * @param id tour id
    */
-  def getTourRates(body: GetTourRates): ApiRequest[GetTourRatesResult] =
-    ApiRequest[GetTourRatesResult](ApiMethods.POST, "https://virtserver.swaggerhub.com/tangol/Tangol/1.0.0", "/GetTourRates", "application/xml")
-      .withBody(body)
+  def getTourRates(id: String): ApiRequest[GetTourRatesResult] =
+    ApiRequest[GetTourRatesResult](ApiMethods.POST, "https://virtserver.swaggerhub.com/tangol/Tangol/1.0.0", "/GetTourRates/{id}", "application/json")
+      .withPathParam("id", id)
       .withSuccessResponse[GetTourRatesResult](200)
       
 

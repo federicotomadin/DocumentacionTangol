@@ -71,11 +71,11 @@ Class | Method | HTTP request | Description
 *BookingsApi* | **search Booking** | **POST** /SearchBooking | Search reservation by BookingConfirmation
 *ToursApi* | **getTourCountries** | **POST** /GetTourCountries | Get list countries of tours
 *ToursApi* | **getTourDestination** | **POST** /GetTourDestination | Get list of destination
-*ToursApi* | **getTourDetails** | **POST** /GetTourDetails | Obtener detalles de un tour
+*ToursApi* | **getTourDetails** | **POST** /GetTourDetails/{id} | Obtener detalles de un tour
 *ToursApi* | **getTourListByDestination** | **POST** /GetTourListByDestination | Get list tour by destination
 *ToursApi* | **getTourListByFilters** | **POST** /GetTourListByFilters | Get list by filters
 *ToursApi* | **getTourQuotation** | **POST** /GetTourQuotation | Get list by filters
-*ToursApi* | **getTourRates** | **POST** /GetTourRates | Get list by filters
+*ToursApi* | **getTourRates** | **POST** /GetTourRates/{id} | Get list by filters
 
 
 ## Documentation for Models
@@ -91,8 +91,7 @@ Class | Method | HTTP request | Description
  - [GetTourDestination](GetTourDestination.md)
  - [GetTourDestinationsResult](GetTourDestinationsResult.md)
  - [GetTourDestinationsResultListDestination](GetTourDestinationsResultListDestination.md)
- - [GetTourDetails](GetTourDetails.md)
- - [GetTourDetaisResult](GetTourDetaisResult.md)
+ - [GetTourDetailsResult](GetTourDetailsResult.md)
  - [GetTourListByDestination](GetTourListByDestination.md)
  - [GetTourListByFilters](GetTourListByFilters.md)
  - [GetTourListByFiltersResult](GetTourListByFiltersResult.md)
