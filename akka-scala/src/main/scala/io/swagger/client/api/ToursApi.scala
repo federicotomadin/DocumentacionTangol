@@ -109,10 +109,12 @@ object ToursApi {
    *   code 200 : GetTourRatesResult (succeful operation)
    * 
    * @param id tour id
+   * @param authorization Bearer &#39;token&#39;
    */
-  def getTourRates(id: String): ApiRequest[GetTourRatesResult] =
+  def getTourRates(id: String, authorization: String): ApiRequest[GetTourRatesResult] =
     ApiRequest[GetTourRatesResult](ApiMethods.POST, "https://virtserver.swaggerhub.com/tangol/Tangol/1.0.0", "/GetTourRates/{id}", "application/json")
       .withPathParam("id", id)
+      .withHeaderParam("Authorization", authorization)
       .withSuccessResponse[GetTourRatesResult](200)
       
 
