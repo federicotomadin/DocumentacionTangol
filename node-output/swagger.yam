@@ -1,0 +1,826 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "API Rest Tangol Tours S.R.L",
+    "description" : "Agency tourism from Argentina",
+    "contact" : {
+      "url" : "https://www.linkedin.com/in/federicotomadin/",
+      "email" : "sistemas@tangol.com"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/tangol/TangolTours/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://tangol.com/TangolApi/Tour",
+    "description" : "Tangol Api"
+  } ],
+  "tags" : [ {
+    "name" : "Tours",
+    "description" : "Tours - Destination - Countries - Rates - Quotation"
+  }, {
+    "name" : "Bookings",
+    "description" : "Create - Cancelation - Search",
+    "externalDocs" : {
+      "url" : "https://www.tangol.com"
+    }
+  } ],
+  "paths" : {
+    "/GetTourCountries" : {
+      "get" : {
+        "tags" : [ "Tours" ],
+        "description" : "Countries where there are tours for Tangol.",
+        "responses" : {
+          "200" : {
+            "description" : "array of countries",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Countries"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetTourDetails/{id}" : {
+      "get" : {
+        "tags" : [ "Tours" ],
+        "description" : "Get tour details for id tour.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "tour id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of countries",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TourDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetTourDetailsList" : {
+      "get" : {
+        "tags" : [ "Tours" ],
+        "description" : "Tours details",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List tours with details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TourDetailsList"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetBookingDetails" : {
+      "get" : {
+        "tags" : [ "Bookings" ],
+        "description" : "Get details for a booking.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "coordinates",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "LanguageCode" : {
+                    "type" : "string",
+                    "example" : "ENG"
+                  },
+                  "BookingReference" : {
+                    "type" : "string",
+                    "example" : ""
+                  },
+                  "BookingConfirmation" : {
+                    "type" : "string",
+                    "example" : "PF7316"
+                  }
+                }
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "booking object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/BookingDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "TourDetails" : {
+        "required" : [ "ChdFrom", "ChdTo", "Country", "CountryCode", "Currency", "Description", "Destination", "DestinationId", "Difficulty", "Duration", "EndPoint", "ExternalReference", "InfFrom", "InfTo", "LanguageCode", "ListMonths", "MinRate", "Name", "NotIncluded", "Others", "PhysicalReq", "PicList", "ResellerId", "StartPoint", "SubTypeCode", "SubTypeDesc", "Summary", "SupplierId", "Timestamp", "TourId", "TourType", "TypeCode", "TypeDesc", "UrlHomePic", "UrlTour", "UserEmail", "UserPwd", "WhatToBring", "reqStatus" ],
+        "type" : "object",
+        "properties" : {
+          "TourId" : {
+            "type" : "number",
+            "example" : 39
+          },
+          "Name" : {
+            "type" : "string",
+            "example" : "Helicopter Ride By Buenos Aires"
+          },
+          "DestinationId" : {
+            "type" : "number",
+            "example" : 20
+          },
+          "Destination" : {
+            "type" : "string",
+            "example" : "Buenos Aires"
+          },
+          "CountryCode" : {
+            "type" : "string",
+            "example" : "AR"
+          },
+          "Country" : {
+            "type" : "string",
+            "example" : "Argentina"
+          },
+          "LanguageCode" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "Currency" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "MinRate" : {
+            "type" : "number",
+            "example" : 430.0
+          },
+          "Duration" : {
+            "type" : "string",
+            "example" : "30 To 60 Minutes"
+          },
+          "UrlHomePic" : {
+            "type" : "string",
+            "example" : "https://www.tangol.com/Fotos/Tours/paseos-en-helicoptero-buenos-aires_39_201911070711160.JPG"
+          },
+          "Summary" : {
+            "type" : "string",
+            "example" : "<b> Enjoy Buenos Aires from a unique place!.."
+          },
+          "Description" : {
+            "type" : "string",
+            "example" : "15 minutes before the start of the tour..."
+          },
+          "PicList" : {
+            "type" : "string",
+            "example" : "https://www.tangol.com/Fotos/Tours/20131021.Roteiro-BuenosAires-Helitour.upd.jpg"
+          },
+          "TypeCode" : {
+            "type" : "string",
+            "example" : "EXCURSION"
+          },
+          "TypeDesc" : {
+            "type" : "string",
+            "example" : "Day Tours"
+          },
+          "SubTypeCode" : {
+            "type" : "string",
+            "example" : "CLASICAS"
+          },
+          "SubTypeDesc" : {
+            "type" : "string",
+            "example" : "classic"
+          },
+          "Included" : {
+            "type" : "string",
+            "example" : "Helicopter ride with professional pilot"
+          },
+          "NotIncluded" : {
+            "type" : "string",
+            "example" : "Transfer from/to the heliport.."
+          },
+          "PhysicalReq" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Difficulty" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "WhatToBring" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "StartPoint" : {
+            "type" : "string",
+            "example" : "San Fernando: San..."
+          },
+          "EndPoint" : {
+            "type" : "string",
+            "example" : "San Fernando: San Fernando Heliport.."
+          },
+          "Others" : {
+            "type" : "string",
+            "example" : "- The rides leave every day from.."
+          },
+          "TourType" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "UrlTour" : {
+            "type" : "string",
+            "example" : "https://www.tangol.com/eng/argentina/buenos-aires/day-tours/classic/helicopter-ride-by-buenos-aires_t_39"
+          },
+          "ListMonths" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "01-2021,02-2021"
+            }
+          },
+          "ChdFrom" : {
+            "type" : "number",
+            "example" : 3
+          },
+          "ChdTo" : {
+            "type" : "number",
+            "example" : 9
+          },
+          "InfFrom" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "InfTo" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "UserEmail" : {
+            "type" : "string"
+          },
+          "UserPwd" : {
+            "type" : "string"
+          },
+          "ExternalReference" : {
+            "type" : "string"
+          },
+          "Timestamp" : {
+            "type" : "string",
+            "example" : "0001-01-01T00:00:00"
+          },
+          "reqStatus" : {
+            "type" : "string"
+          },
+          "ResellerId" : {
+            "type" : "number"
+          },
+          "SupplierId" : {
+            "type" : "number"
+          }
+        }
+      },
+      "BookingDetails" : {
+        "required" : [ "Adu", "BookingConfirmation", "BookingDate", "BookingReference", "Child", "Comments", "ContactEmail", "ContactPhone", "Currency", "Inf", "LanguageCode", "PaxName", "Status", "Total", "TravelDate", "listTourBooking", "listTravellers" ],
+        "type" : "object",
+        "properties" : {
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "BookingReference" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "BookingConfirmation" : {
+            "type" : "string",
+            "example" : "PF7316"
+          },
+          "BookingDate" : {
+            "type" : "string",
+            "example" : "2021-06-24T14:00:45.693"
+          },
+          "TravelDate" : {
+            "type" : "string",
+            "example" : "2021-09-16T00:00:00"
+          },
+          "Status" : {
+            "type" : "string",
+            "example" : "CONFIRMED"
+          },
+          "PaxName" : {
+            "type" : "string",
+            "example" : "Churba, Leticia Liliana (ADU) () // Sztarkman, Juana (ADU) () // Sztarkman, Violeta (ADU) ()"
+          },
+          "Total" : {
+            "type" : "number",
+            "example" : 433642.0
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "ARS"
+          },
+          "Adu" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "Child" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "Inf" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "ContactPhone" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ContactEmail" : {
+            "type" : "string",
+            "example" : "leticia@churba.com.ar"
+          },
+          "Comments" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ListTravellers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Travellers"
+            }
+          },
+          "ListTourBooking" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourBooking"
+            }
+          }
+        }
+      },
+      "ListTourBooking" : {
+        "required" : [ "Adu", "BookingDate", "Chd", "Child", "Commission", "Cpl", "Currency", "Dbl", "Discount", "ExternalReference", "Inf", "LanguageCode", "NettAmount", "NettRate", "PickUpLocation", "PickUpTime", "PorcCommission", "QuotationDate", "RackAmount", "RackRate", "ResellerId", "Sgl", "SupplierId", "Timestamp", "TourDate", "TourDescription PAIS", "TourId", "TourLanguage", "TourLanguageCode", "TourName", "TourOption", "TourOptionCode", "TourOptionDescription", "Tpl", "Type", "UserEmail", "UserPwd", "reqStatus" ],
+        "type" : "object",
+        "properties" : {
+          "TourId" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "BookingDate" : {
+            "type" : "string",
+            "example" : "2021-09-16T00:00:00"
+          },
+          "Sgl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Dbl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Tpl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Adu" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "Chd" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Inf" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "TourOptionCode" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Discount" : {
+            "type" : "string",
+            "example" : "0"
+          },
+          "TourDescription" : {
+            "type" : "string",
+            "example" : "Impuesto PAIS"
+          },
+          "TourOptionDescription" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Commission" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "RackRate" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "NettRate" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "PickUpLocation" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "PickUpTime" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "TourLanguageCode" : {
+            "type" : "string",
+            "example" : "A_CONFIRMAR"
+          },
+          "Type" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "TourDate" : {
+            "type" : "string",
+            "example" : "0001-01-01T00:00:00"
+          },
+          "QuotationDate" : {
+            "type" : "string",
+            "example" : "0001-01-01T00:00:00"
+          },
+          "TourOption" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Cpl" : {
+            "type" : "string",
+            "example" : "0"
+          },
+          "Child" : {
+            "type" : "string",
+            "example" : "0"
+          },
+          "TourLanguage" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "RackAmount" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "NettAmount" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "PorcCommission" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "TourName" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "UserEmail" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "UserPwd" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ExternalReference" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Timestamp" : {
+            "type" : "string",
+            "example" : "2021-06-27T19:02:27.5033512-03:00"
+          },
+          "reqStatus" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ResellerId" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "SupplierId" : {
+            "type" : "string",
+            "example" : ""
+          }
+        }
+      },
+      "Travellers" : {
+        "required" : [ "AgeBand", "BirthDate", "DocExpirationDate", "DocIssuedDate", "DocNumber", "DocType", "Email", "FirstName Liliana", "Gender", "Hotel", "LastName", "Nationality", "Phone" ],
+        "type" : "object",
+        "properties" : {
+          "AgeBand" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "BirthDate" : {
+            "type" : "string",
+            "example" : "1900-01-01T00:00:00"
+          },
+          "DocExpirationDate" : {
+            "type" : "string",
+            "example" : "1900-01-01T00:00:00"
+          },
+          "DocIssuedDate" : {
+            "type" : "string",
+            "example" : "1900-01-01T00:00:00"
+          },
+          "DocNumber" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "DocType" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "Email" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "FirstName" : {
+            "type" : "string",
+            "example" : "Leticia Liliana"
+          },
+          "Gender" : {
+            "type" : "number"
+          },
+          "Hotel" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "LastName" : {
+            "type" : "string",
+            "example" : "Churba"
+          },
+          "Nationality" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Phone" : {
+            "type" : "string",
+            "example" : ""
+          }
+        }
+      },
+      "TourDetailsList" : {
+        "required" : [ "ChdFrom", "ChdTo", "Country", "CountryCode", "Currency", "Description", "Destination", "DestinationId", "Difficulty", "Duration", "EndPoint", "ExternalReference", "InfFrom", "InfTo", "LanguageCode", "ListMonths", "MinRate", "Name", "NotIncluded", "Others", "PhysicalReq", "PicList", "ResellerId", "StartPoint", "SubTypeCode", "SubTypeDesc", "Summary", "SupplierId", "Timestamp", "TourId", "TourType", "TypeCode", "TypeDesc", "UrlHomePic", "UrlTour", "UserEmail", "UserPwd", "WhatToBring", "reqStatus" ],
+        "type" : "object",
+        "properties" : {
+          "TourId" : {
+            "type" : "number",
+            "example" : 39
+          },
+          "Name" : {
+            "type" : "string",
+            "example" : "Helicopter Ride By Buenos Aires"
+          },
+          "DestinationId" : {
+            "type" : "number",
+            "example" : 20
+          },
+          "Destination" : {
+            "type" : "string",
+            "example" : "Buenos Aires"
+          },
+          "CountryCode" : {
+            "type" : "string",
+            "example" : "AR"
+          },
+          "Country" : {
+            "type" : "string",
+            "example" : "Argentina"
+          },
+          "LanguageCode" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "Currency" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "MinRate" : {
+            "type" : "number",
+            "example" : 430.0
+          },
+          "Duration" : {
+            "type" : "string",
+            "example" : "30 To 60 Minutes"
+          },
+          "UrlHomePic" : {
+            "type" : "string",
+            "example" : "https://www.tangol.com/Fotos/Tours/paseos-en-helicoptero-buenos-aires_39_201911070711160.JPG"
+          },
+          "Summary" : {
+            "type" : "string",
+            "example" : "<b> Enjoy Buenos Aires from a unique place!.."
+          },
+          "Description" : {
+            "type" : "string",
+            "example" : "15 minutes before the start of the tour..."
+          },
+          "PicList" : {
+            "type" : "string",
+            "example" : "https://www.tangol.com/Fotos/Tours/20131021.Roteiro-BuenosAires-Helitour.upd.jpg"
+          },
+          "TypeCode" : {
+            "type" : "string",
+            "example" : "EXCURSION"
+          },
+          "TypeDesc" : {
+            "type" : "string",
+            "example" : "Day Tours"
+          },
+          "SubTypeCode" : {
+            "type" : "string",
+            "example" : "CLASICAS"
+          },
+          "SubTypeDesc" : {
+            "type" : "string",
+            "example" : "classic"
+          },
+          "Included" : {
+            "type" : "string",
+            "example" : "Helicopter ride with professional pilot"
+          },
+          "NotIncluded" : {
+            "type" : "string",
+            "example" : "Transfer from/to the heliport.."
+          },
+          "PhysicalReq" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Difficulty" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "WhatToBring" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "StartPoint" : {
+            "type" : "string",
+            "example" : "San Fernando: San..."
+          },
+          "EndPoint" : {
+            "type" : "string",
+            "example" : "San Fernando: San Fernando Heliport.."
+          },
+          "Others" : {
+            "type" : "string",
+            "example" : "- The rides leave every day from.."
+          },
+          "TourType" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "UrlTour" : {
+            "type" : "string",
+            "example" : "https://www.tangol.com/eng/argentina/buenos-aires/day-tours/classic/helicopter-ride-by-buenos-aires_t_39"
+          },
+          "ListMonths" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "01-2021,02-2021"
+            }
+          },
+          "ChdFrom" : {
+            "type" : "number",
+            "example" : 3
+          },
+          "ChdTo" : {
+            "type" : "number",
+            "example" : 9
+          },
+          "InfFrom" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "InfTo" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "UserEmail" : {
+            "type" : "string"
+          },
+          "UserPwd" : {
+            "type" : "string"
+          },
+          "ExternalReference" : {
+            "type" : "string"
+          },
+          "Timestamp" : {
+            "type" : "string",
+            "example" : "0001-01-01T00:00:00"
+          },
+          "reqStatus" : {
+            "type" : "string"
+          },
+          "ResellerId" : {
+            "type" : "number"
+          },
+          "SupplierId" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Countries" : {
+        "required" : [ "Description", "IsoCode", "ToursQty" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "AR"
+          },
+          "Description" : {
+            "type" : "string",
+            "example" : "Argentina"
+          },
+          "ToursQty" : {
+            "type" : "number",
+            "example" : 818
+          }
+        }
+      }
+    }
+  }
+}
