@@ -180,10 +180,55 @@
           }
         }
       }
+    },
+    "/GetTourRates/{id}" : {
+      "get" : {
+        "tags" : [ "Tours" ],
+        "description" : "Get tour rates for id tour.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "tour id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of countries",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TourRates"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
     "schemas" : {
+      "TourRates" : {
+        "type" : "object"
+      },
       "TourDetails" : {
         "required" : [ "ChdFrom", "ChdTo", "Country", "CountryCode", "Currency", "Description", "Destination", "DestinationId", "Difficulty", "Duration", "EndPoint", "ExternalReference", "InfFrom", "InfTo", "LanguageCode", "ListMonths", "MinRate", "Name", "NotIncluded", "Others", "PhysicalReq", "PicList", "ResellerId", "StartPoint", "SubTypeCode", "SubTypeDesc", "Summary", "SupplierId", "Timestamp", "TourId", "TourType", "TypeCode", "TypeDesc", "UrlHomePic", "UrlTour", "UserEmail", "UserPwd", "WhatToBring", "reqStatus" ],
         "type" : "object",
