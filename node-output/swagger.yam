@@ -71,6 +71,67 @@
                 }
               }
             }
+          },
+          "500" : {
+            "description" : "Make booking error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MakeBookingError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CancelBooking" : {
+      "post" : {
+        "tags" : [ "Tours" ],
+        "description" : "Endpoint for cancel one booking",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "coordinates",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/CancelBookingRequest"
+                }
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of rates",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CancelBookingResponse"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -295,6 +356,134 @@
   },
   "components" : {
     "schemas" : {
+      "CancelBookingResponse" : {
+        "required" : [ "BookingConfirmation", "BookingReference", "Currency", "ExternalReference", "LanguageCode", "ModoTest", "RequestStatus", "ResellerId", "SupplierId", "TimeStamp", "TotalCancelAmount", "listTourBookingResponse" ],
+        "type" : "object",
+        "properties" : {
+          "RequestStatus" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RequestStatus"
+            }
+          },
+          "BookingReference" : {
+            "type" : "string",
+            "example" : "TEST_EXPERIENCE_BANK_55"
+          },
+          "BookingConfirmation" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "LanguageCode" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LanguageCodes"
+            }
+          },
+          "Currency" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CurrencyCodes"
+            }
+          },
+          "TotalCancelAmount" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "listTourBookingResponse" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourBookingResponse"
+            }
+          },
+          "ModoTest" : {
+            "type" : "boolean",
+            "example" : false
+          },
+          "ResellerId" : {
+            "type" : "string",
+            "example" : "44634"
+          },
+          "SupplierId" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ExternalReference" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "TimeStamp" : {
+            "type" : "string",
+            "example" : "2021-01-01T00:00:00"
+          }
+        }
+      },
+      "CancelBookingRequest" : {
+        "required" : [ "BookingConfirmation", "BookingReference", "Comments", "Currency", "LanguageCode", "ModoTest", "ResellerId", "listTourBookingRequest" ],
+        "type" : "object",
+        "properties" : {
+          "BookinReference" : {
+            "type" : "string",
+            "example" : "TEST_EXPERIENCE_BANK_54"
+          },
+          "BookingConfirmation" : {
+            "type" : "string",
+            "example" : "OP3486"
+          },
+          "LanguageCode" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LanguageCodes"
+            }
+          },
+          "ResellerId" : {
+            "type" : "number",
+            "example" : 44634
+          },
+          "Currency" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CurrencyCodes"
+            }
+          },
+          "Comments" : {
+            "type" : "string",
+            "example" : "some notesome reason"
+          },
+          "listTourBookingRequest" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourBookingRequest"
+            }
+          },
+          "ModoTest" : {
+            "type" : "boolean",
+            "example" : false
+          }
+        }
+      },
+      "MakeBookingError" : {
+        "required" : [ "code", "details", "status", "title" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "example" : "500"
+          },
+          "code" : {
+            "type" : "string",
+            "example" : "InternalServerError"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "Error code 00 - Booking already processed"
+          },
+          "details" : {
+            "type" : "string",
+            "example" : "en TangolApi.Servicios.MakeBooking(MakeBookingRequest Request) en C:\\Users\\.."
+          }
+        }
+      },
       "MakeBookingRequest" : {
         "required" : [ "Adu", "BookingReference", "Child", "Comments", "ContactEmail", "ContactPhone", "Currency", "ExternalReference", "Inf", "LanguageCode", "ModoTest", "ResellerId", "SupplierId", "TimeStamp", "listTourBookingRequest", "listTravellers" ],
         "type" : "object",
@@ -1359,7 +1548,7 @@
           "Currency" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/Currency"
+              "$ref" : "#/components/schemas/CurrencyCodes"
             }
           },
           "BookingDate" : {
