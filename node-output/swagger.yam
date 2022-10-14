@@ -27,10 +27,163 @@
     }
   } ],
   "paths" : {
+    "/MakeBooking" : {
+      "post" : {
+        "tags" : [ "Bookings" ],
+        "description" : "It generate a booking",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Make booking",
+          "in" : "query",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MakeBookingRequest"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of rates",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MakeBookingResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Make booking error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MakeBookingError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CancelBooking" : {
+      "post" : {
+        "tags" : [ "Bookings" ],
+        "description" : "Endpoint for cancel one booking",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Cancel booking",
+          "in" : "query",
+          "required" : false,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CancelBookingRequest"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of rates",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CancelBookingResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/TourRatesList" : {
+      "post" : {
+        "tags" : [ "Tours" ],
+        "description" : "Get rates for a list of the tours",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Lista ids",
+          "in" : "query",
+          "required" : false,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TourRatesListRequest"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of rates",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TourRatesList"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/GetTourCountries" : {
       "get" : {
         "tags" : [ "Tours" ],
         "description" : "Countries where there are tours for Tangol.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "array of countries",
@@ -75,7 +228,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "array of countries",
+            "description" : "Tour details",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -90,8 +243,8 @@
         }
       }
     },
-    "/GetTourDetailsList" : {
-      "get" : {
+    "/TourDetailsList" : {
+      "post" : {
         "tags" : [ "Tours" ],
         "description" : "Tours details",
         "parameters" : [ {
@@ -103,6 +256,17 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "Lista ids",
+          "in" : "query",
+          "required" : false,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TourRatesListRequest"
+              }
+            }
           }
         } ],
         "responses" : {
@@ -137,11 +301,9 @@
             "type" : "string"
           }
         }, {
-          "name" : "coordinates",
+          "name" : "Booking details",
           "in" : "query",
           "required" : false,
-          "style" : "form",
-          "explode" : true,
           "content" : {
             "application/json" : {
               "schema" : {
@@ -180,10 +342,368 @@
           }
         }
       }
+    },
+    "/TourRates/{id}" : {
+      "get" : {
+        "tags" : [ "Tours" ],
+        "description" : "Get tour rates for id tour.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "tour id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of countries",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TourRates"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
     "schemas" : {
+      "TourRatesListRequest" : {
+        "required" : [ "listaIds" ],
+        "type" : "object",
+        "properties" : {
+          "listaIds" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TourRatesListRequestArray"
+            }
+          }
+        }
+      },
+      "TourRatesListRequestArray" : {
+        "type" : "number",
+        "example" : 1917
+      },
+      "CancelBookingResponse" : {
+        "required" : [ "BookingConfirmation", "BookingReference", "Currency", "ExternalReference", "LanguageCode", "ModoTest", "RequestStatus", "ResellerId", "SupplierId", "TimeStamp", "TotalCancelAmount", "listTourBookingResponse" ],
+        "type" : "object",
+        "properties" : {
+          "RequestStatus" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RequestStatus"
+            }
+          },
+          "BookingReference" : {
+            "type" : "string",
+            "example" : "TEST_EXPERIENCE_BANK_55"
+          },
+          "BookingConfirmation" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "LanguageCode" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LanguageCodes"
+            }
+          },
+          "Currency" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CurrencyCodes"
+            }
+          },
+          "TotalCancelAmount" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "listTourBookingResponse" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourBookingResponse"
+            }
+          },
+          "ModoTest" : {
+            "type" : "boolean",
+            "example" : false
+          },
+          "ResellerId" : {
+            "type" : "string",
+            "example" : "44634"
+          },
+          "SupplierId" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ExternalReference" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "TimeStamp" : {
+            "type" : "string",
+            "example" : "2021-01-01T00:00:00"
+          }
+        }
+      },
+      "CancelBookingRequest" : {
+        "required" : [ "BookingConfirmation", "BookingReference", "Comments", "Currency", "LanguageCode", "ModoTest", "ResellerId", "listTourBookingRequest" ],
+        "type" : "object",
+        "properties" : {
+          "BookinReference" : {
+            "type" : "string",
+            "example" : "TEST_EXPERIENCE_BANK_54"
+          },
+          "BookingConfirmation" : {
+            "type" : "string",
+            "example" : "OP3486"
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "ResellerId" : {
+            "type" : "number",
+            "example" : 44634
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "Comments" : {
+            "type" : "string",
+            "example" : "some notesome reason"
+          },
+          "listTourBookingRequest" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourBookingRequest"
+            }
+          },
+          "ModoTest" : {
+            "type" : "boolean",
+            "example" : false
+          }
+        }
+      },
+      "MakeBookingError" : {
+        "required" : [ "code", "details", "status", "title" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "example" : "500"
+          },
+          "code" : {
+            "type" : "string",
+            "example" : "InternalServerError"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "Error code 00 - Booking already processed"
+          },
+          "details" : {
+            "type" : "string",
+            "example" : "en TangolApi.Servicios.MakeBooking(MakeBookingRequest Request) en C:\\Users\\.."
+          }
+        }
+      },
+      "MakeBookingRequest" : {
+        "required" : [ "Adu", "BookingReference", "Child", "Comments", "ContactEmail", "ContactPhone", "Currency", "ExternalReference", "Inf", "LanguageCode", "ModoTest", "ResellerId", "SupplierId", "TimeStamp", "listTourBookingRequest", "listTravellers" ],
+        "type" : "object",
+        "properties" : {
+          "BookingReference" : {
+            "type" : "string",
+            "example" : "TEST_EXPERIENCE_BANK_55"
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "Adu" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "Child" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "Inf" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "ContactPhone" : {
+            "type" : "string",
+            "example" : "+474998799654"
+          },
+          "ContactEmail" : {
+            "type" : "string",
+            "example" : "john.doe@example.com"
+          },
+          "Comments" : {
+            "type" : "string",
+            "example" : "Some additional remarks related to the booking"
+          },
+          "ListTravellers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Travellers"
+            }
+          },
+          "ListTourBooking" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourBookingRequest"
+            }
+          }
+        }
+      },
+      "TourRates" : {
+        "required" : [ "ChdFrom", "ChdTo", "Currency", "HtmlRates", "InfFrom", "InfTo", "LanguageCode", "MinRate", "TourId", "ValidFrom" ],
+        "type" : "object",
+        "properties" : {
+          "TourId" : {
+            "type" : "number",
+            "example" : 39
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "ValidFrom" : {
+            "type" : "string",
+            "example" : "2022-04-03T09:15:44.8767905-03:00"
+          },
+          "MinRate" : {
+            "type" : "number",
+            "example" : 54.0
+          },
+          "ChdFrom" : {
+            "type" : "number",
+            "example" : 3
+          },
+          "ChdTo" : {
+            "type" : "number",
+            "example" : 9
+          },
+          "InfFrom" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "InfTo" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "HtmlRates" : {
+            "type" : "string",
+            "example" : "<p align='left'><font size=1 text-align='left'>"
+          },
+          "ListTourOption" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourOption"
+            }
+          },
+          "ListTourRate" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourRate"
+            }
+          }
+        }
+      },
+      "TourRatesList" : {
+        "required" : [ "ChdFrom", "ChdTo", "Currency", "HtmlRates", "InfFrom", "InfTo", "LanguageCode", "MinRate", "TourId", "ValidFrom" ],
+        "type" : "object",
+        "properties" : {
+          "TourId" : {
+            "type" : "number",
+            "example" : 39
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "ValidFrom" : {
+            "type" : "string",
+            "example" : "2022-04-03T09:15:44.8767905-03:00"
+          },
+          "MinRate" : {
+            "type" : "number",
+            "example" : 54.0
+          },
+          "ChdFrom" : {
+            "type" : "number",
+            "example" : 3
+          },
+          "ChdTo" : {
+            "type" : "number",
+            "example" : 9
+          },
+          "InfFrom" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "InfTo" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "HtmlRates" : {
+            "type" : "string",
+            "example" : "<p align='left'><font size=1 text-align='left'>"
+          },
+          "ListTourOption" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourOption"
+            }
+          },
+          "ListTourRate" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourRate"
+            }
+          },
+          "ListBlackDate" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListBlackDate"
+            }
+          }
+        }
+      },
       "TourDetails" : {
         "required" : [ "ChdFrom", "ChdTo", "Country", "CountryCode", "Currency", "Description", "Destination", "DestinationId", "Difficulty", "Duration", "EndPoint", "ExternalReference", "InfFrom", "InfTo", "LanguageCode", "ListMonths", "MinRate", "Name", "NotIncluded", "Others", "PhysicalReq", "PicList", "ResellerId", "StartPoint", "SubTypeCode", "SubTypeDesc", "Summary", "SupplierId", "Timestamp", "TourId", "TourType", "TypeCode", "TypeDesc", "UrlHomePic", "UrlTour", "UserEmail", "UserPwd", "WhatToBring", "reqStatus" ],
         "type" : "object",
@@ -213,12 +733,12 @@
             "example" : "Argentina"
           },
           "LanguageCode" : {
-            "type" : "number",
-            "example" : 1
+            "type" : "string",
+            "example" : "ESP"
           },
           "Currency" : {
-            "type" : "number",
-            "example" : 1
+            "type" : "string",
+            "example" : "USD"
           },
           "MinRate" : {
             "type" : "number",
@@ -385,7 +905,7 @@
           },
           "Currency" : {
             "type" : "string",
-            "example" : "ARS"
+            "example" : "USD"
           },
           "Adu" : {
             "type" : "number",
@@ -435,11 +955,11 @@
           },
           "LanguageCode" : {
             "type" : "string",
-            "example" : ""
+            "example" : "ENG"
           },
           "Currency" : {
             "type" : "string",
-            "example" : ""
+            "example" : "USD"
           },
           "BookingDate" : {
             "type" : "string",
@@ -506,8 +1026,10 @@
             "example" : ""
           },
           "TourLanguageCode" : {
-            "type" : "string",
-            "example" : "A_CONFIRMAR"
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TourLanguageCodes"
+            }
           },
           "Type" : {
             "type" : "number",
@@ -669,12 +1191,12 @@
             "example" : "Argentina"
           },
           "LanguageCode" : {
-            "type" : "number",
-            "example" : 1
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "number",
-            "example" : 1
+            "type" : "string",
+            "example" : "USD"
           },
           "MinRate" : {
             "type" : "number",
@@ -817,7 +1339,538 @@
           },
           "ToursQty" : {
             "type" : "number",
-            "example" : 818
+            "example" : 81
+          }
+        }
+      },
+      "ListTourOption" : {
+        "required" : [ "Code", "Currency", "Description", "MinRate", "StartTime", "Terms" ],
+        "type" : "object",
+        "properties" : {
+          "Code" : {
+            "type" : "string",
+            "example" : "1062"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "Description" : {
+            "type" : "string",
+            "example" : "Goat Corral Dam"
+          },
+          "MinRate" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "StartTime" : {
+            "type" : "string",
+            "example" : "09:00"
+          },
+          "Terms" : {
+            "type" : "string",
+            "example" : ""
+          }
+        }
+      },
+      "ListTourRate" : {
+        "required" : [ "Currency", "PaxFrom", "PaxTo", "PaxType", "RackRateAdu", "RackRateChd", "RackRateInf", "RateType", "StartTime", "Terms", "TourId", "TourOption", "TourOptionDesc", "Utilidad", "ValidFrom", "Validto" ],
+        "type" : "object",
+        "properties" : {
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "PaxFrom" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "PaxTo" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "PaxType" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "RackRateAdu" : {
+            "type" : "number",
+            "example" : 81.0
+          },
+          "RackRateChd" : {
+            "type" : "number",
+            "example" : 81.0
+          },
+          "RackRateInf" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "RateType" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "StartTime" : {
+            "type" : "string",
+            "example" : "0900"
+          },
+          "Terms" : {
+            "type" : "string",
+            "example" : "Cancellation free of charge up to 24 hours before          service."
+          },
+          "TourId" : {
+            "type" : "number",
+            "example" : 499
+          },
+          "TourOption" : {
+            "type" : "string",
+            "example" : "1062"
+          },
+          "TourOptionDesc" : {
+            "type" : "string",
+            "example" : "Goat Corral Dam"
+          },
+          "Utilidad" : {
+            "type" : "string",
+            "example" : "0.6"
+          },
+          "ValidFrom" : {
+            "type" : "string",
+            "example" : "2022-04-01T00:00:00"
+          },
+          "ValidTo" : {
+            "type" : "string",
+            "example" : "2022-06-30T00:00:00"
+          }
+        }
+      },
+      "ListBlackDate" : {
+        "type" : "object"
+      },
+      "CurrencyCodes" : {
+        "required" : [ "ARS", "BRL", "EUR", "USD" ],
+        "type" : "object",
+        "properties" : {
+          "ARS" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "USD" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "BRL" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "EUR" : {
+            "type" : "number",
+            "example" : 3
+          }
+        }
+      },
+      "TourLanguageCodes" : {
+        "required" : [ "A_CONFIRMAR", "DEU", "ENG", "ESP", "FRA", "ITA", "POR" ],
+        "type" : "object"
+      },
+      "LanguageCodes" : {
+        "required" : [ "DEU", "ENG", "ESP", "FRA", "POR" ],
+        "type" : "object",
+        "properties" : {
+          "ESP" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "ENG" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "POR" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "FRA" : {
+            "type" : "number",
+            "example" : 3
+          },
+          "DEU" : {
+            "type" : "number",
+            "example" : 4
+          }
+        }
+      },
+      "RequestStatusType" : {
+        "required" : [ "Error", "Success" ],
+        "type" : "object",
+        "properties" : {
+          "Success" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Error" : {
+            "type" : "number",
+            "example" : 1
+          }
+        }
+      },
+      "Error" : {
+        "required" : [ "ErrorCode", "ErrorDetails", "ErrorMessage" ],
+        "type" : "object",
+        "properties" : {
+          "ErrorCode" : {
+            "type" : "string"
+          },
+          "ErrorMessage" : {
+            "type" : "string"
+          },
+          "ErrorDetails" : {
+            "type" : "string"
+          }
+        }
+      },
+      "RequestStatus" : {
+        "required" : [ "Error", "Status" ],
+        "type" : "object",
+        "properties" : {
+          "Status" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RequestStatusType"
+            }
+          },
+          "Error" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "TourType" : {
+        "required" : [ "Multiservice", "Option", "Package", "Service", "Ticket" ],
+        "type" : "object",
+        "properties" : {
+          "Multiservice" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Package" : {
+            "type" : "number",
+            "example" : 1
+          },
+          "Service" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "Ticket" : {
+            "type" : "number",
+            "example" : 3
+          },
+          "Option" : {
+            "type" : "number",
+            "example" : 4
+          }
+        }
+      },
+      "ListTourBookingResponse" : {
+        "required" : [ "Adu", "BookingDate", "Chd", "Child", "Comission", "Cpl", "Currency", "Dbl", "Discount", "ExternalReference", "Inf", "LanguageCode", "NettAmount", "NettRate", "PickUpLocation", "PickUpTime", "PorcComission", "QuotationDate", "RackAmount", "RackRate", "ResellerId", "Sgl", "SupplierId", "TimeStamp", "TourDate", "TourDescription", "TourId", "TourLanguage", "TourLanguageCode", "TourName", "TourOption", "TourOptionCode", "TourOptionDescription", "Tpl", "Type", "UserEmail", "UserPwd", "reqStatus" ],
+        "type" : "object",
+        "properties" : {
+          "TourId" : {
+            "type" : "number",
+            "example" : 93377
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "BookingDate" : {
+            "type" : "string",
+            "example" : "2021-01-01T00:00:00"
+          },
+          "Sgl" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "Dbl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Tpl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Adu" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Chd" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Inf" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "TourOptionCode" : {
+            "type" : "string"
+          },
+          "Discount" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "TourDescription" : {
+            "type" : "string"
+          },
+          "TourOptionDescription" : {
+            "type" : "string"
+          },
+          "Comission" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "RackRate" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "NettRate" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "PickUpLocation" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "PickUpTime" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Type" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TourType"
+            }
+          },
+          "TourDate" : {
+            "type" : "string",
+            "example" : "2022-01-21T00:00:00"
+          },
+          "QuotationDate" : {
+            "type" : "string",
+            "example" : "2022-01-21T00:00:00"
+          },
+          "TourOption" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "Cpl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Child" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "TourLanguage" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "RackAmount" : {
+            "type" : "number",
+            "example" : 363.08
+          },
+          "NettAmount" : {
+            "type" : "number",
+            "example" : 363.08
+          },
+          "PorcComission" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "TourName" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "UserEmail" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "UserPwd" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ExternalReference" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "TimeStamp" : {
+            "type" : "string",
+            "example" : "2021-12-11T18:30:17.1749455-03:00"
+          },
+          "reqStatus" : {
+            "type" : "string"
+          },
+          "ResellerId" : {
+            "type" : "string"
+          },
+          "SupplierId" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ListTourBookingRequest" : {
+        "required" : [ "Child", "Cpl", "Currency", "Dbl", "ExternalReference", "Inf", "PickUpLocation", "PickUpTime", "PorcDiscount", "QuotationDate", "ResellerId", "Sgl", "SupplierId", "TimeStamp", "TourDate", "TourId", "TourLanguage", "TourOption", "TourOptionCode", "Tpl", "Type" ],
+        "type" : "object",
+        "properties" : {
+          "Type" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TourType"
+            }
+          },
+          "TourId" : {
+            "type" : "string",
+            "example" : "93377"
+          },
+          "TourDate" : {
+            "type" : "string",
+            "example" : "2022-01-21T00:00:00"
+          },
+          "QuotationDate" : {
+            "type" : "string",
+            "example" : "2022-01-21T00:00:00"
+          },
+          "TourOption" : {
+            "type" : "string"
+          },
+          "TourOptionCode" : {
+            "type" : "string",
+            "example" : "4496"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "Sgl" : {
+            "type" : "number",
+            "example" : 2
+          },
+          "Dbl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Tpl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Cpl" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Child" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "Inf" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "PorcDiscount" : {
+            "type" : "number",
+            "example" : 0
+          },
+          "TourLanguage" : {
+            "type" : "number",
+            "example" : 3
+          },
+          "PickUpLocation" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "PickUpTime" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "ResellerId" : {
+            "type" : "number"
+          },
+          "SupplierId" : {
+            "type" : "number"
+          },
+          "ExternalReference" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "TimeStamp" : {
+            "type" : "string",
+            "example" : "2021-12-11T18:30:17.1749455-03:00"
+          }
+        }
+      },
+      "MakeBookingResponse" : {
+        "required" : [ "BookingConfirmation", "BookingReference", "Curreny", "ExternalReference", "LanguageCode", "ModoTest", "RequestStatus", "ResellerId", "SuppierId", "TimeStamp", "TotalComission", "TotalNettAmount", "TotalRackAmount", "listTourBookingResponse" ],
+        "type" : "object",
+        "properties" : {
+          "RequestStatus" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RequestStatus"
+            }
+          },
+          "BookingReference" : {
+            "type" : "string",
+            "example" : "TEST_EXPERIENCE_BANK_55"
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ENG"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "TotalRackAmount" : {
+            "type" : "number",
+            "example" : 363.08
+          },
+          "TotalComission" : {
+            "type" : "number",
+            "example" : 0.0
+          },
+          "TotalNettAmount" : {
+            "type" : "number",
+            "example" : 363.08
+          },
+          "BookingConfirmation" : {
+            "type" : "string",
+            "example" : "OP3509"
+          },
+          "ListTourBookingResponse" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ListTourBookingResponse"
+            }
+          },
+          "ModoTest" : {
+            "type" : "boolean",
+            "example" : false
+          },
+          "ResellerId" : {
+            "type" : "string",
+            "example" : "36554"
+          },
+          "SupplierId" : {
+            "type" : "string"
+          },
+          "ExternalReference" : {
+            "type" : "string"
+          },
+          "Timestamp" : {
+            "type" : "string",
+            "example" : "2021-12-11T18:30:14.629101-03:00"
           }
         }
       }
