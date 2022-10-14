@@ -42,16 +42,13 @@
             "type" : "string"
           }
         }, {
-          "name" : "coordinates",
+          "name" : "Make booking",
           "in" : "query",
-          "required" : false,
+          "required" : true,
           "content" : {
             "application/json" : {
               "schema" : {
-                "type" : "array",
-                "items" : {
-                  "$ref" : "#/components/schemas/MakeBookingRequest"
-                }
+                "$ref" : "#/components/schemas/MakeBookingRequest"
               }
             }
           }
@@ -101,16 +98,13 @@
             "type" : "string"
           }
         }, {
-          "name" : "coordinates",
+          "name" : "Cancel booking",
           "in" : "query",
           "required" : false,
           "content" : {
             "application/json" : {
               "schema" : {
-                "type" : "array",
-                "items" : {
-                  "$ref" : "#/components/schemas/CancelBookingRequest"
-                }
+                "$ref" : "#/components/schemas/CancelBookingRequest"
               }
             }
           }
@@ -136,6 +130,28 @@
       "post" : {
         "tags" : [ "Tours" ],
         "description" : "Get rates for a list of the tours",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Lista ids",
+          "in" : "query",
+          "required" : false,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TourRatesListRequest"
+              }
+            }
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "array of rates",
@@ -157,6 +173,17 @@
       "get" : {
         "tags" : [ "Tours" ],
         "description" : "Countries where there are tours for Tangol.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "array of countries",
@@ -216,7 +243,7 @@
         }
       }
     },
-    "/GetTourDetailsList" : {
+    "/TourDetailsList" : {
       "post" : {
         "tags" : [ "Tours" ],
         "description" : "Tours details",
@@ -229,6 +256,17 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "Lista ids",
+          "in" : "query",
+          "required" : false,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TourRatesListRequest"
+              }
+            }
           }
         } ],
         "responses" : {
@@ -248,7 +286,7 @@
         }
       }
     },
-    "/BookingDetails" : {
+    "/GetBookingDetails" : {
       "get" : {
         "tags" : [ "Bookings" ],
         "description" : "Get details for a booking.",
@@ -263,7 +301,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "coordinates",
+          "name" : "Booking details",
           "in" : "query",
           "required" : false,
           "content" : {
@@ -272,10 +310,8 @@
                 "type" : "object",
                 "properties" : {
                   "LanguageCode" : {
-                    "type" : "array",
-                    "items" : {
-                      "$ref" : "#/components/schemas/TourLanguageCodes"
-                    }
+                    "type" : "string",
+                    "example" : "ENG"
                   },
                   "BookingReference" : {
                     "type" : "string",
@@ -352,6 +388,22 @@
   },
   "components" : {
     "schemas" : {
+      "TourRatesListRequest" : {
+        "required" : [ "listaIds" ],
+        "type" : "object",
+        "properties" : {
+          "listaIds" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TourRatesListRequestArray"
+            }
+          }
+        }
+      },
+      "TourRatesListRequestArray" : {
+        "type" : "number",
+        "example" : 1917
+      },
       "CancelBookingResponse" : {
         "required" : [ "BookingConfirmation", "BookingReference", "Currency", "ExternalReference", "LanguageCode", "ModoTest", "RequestStatus", "ResellerId", "SupplierId", "TimeStamp", "TotalCancelAmount", "listTourBookingResponse" ],
         "type" : "object",
@@ -427,20 +479,16 @@
             "example" : "OP3486"
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "ResellerId" : {
             "type" : "number",
             "example" : 44634
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "Comments" : {
             "type" : "string",
@@ -489,16 +537,12 @@
             "example" : "TEST_EXPERIENCE_BANK_55"
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "Adu" : {
             "type" : "number",
@@ -547,16 +591,12 @@
             "example" : 39
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "ValidFrom" : {
             "type" : "string",
@@ -609,16 +649,12 @@
             "example" : 39
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "ValidFrom" : {
             "type" : "string",
@@ -697,16 +733,12 @@
             "example" : "Argentina"
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ESP"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "MinRate" : {
             "type" : "number",
@@ -840,10 +872,8 @@
         "type" : "object",
         "properties" : {
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "BookingReference" : {
             "type" : "string",
@@ -874,10 +904,8 @@
             "example" : 433642.0
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "Adu" : {
             "type" : "number",
@@ -926,16 +954,12 @@
             "example" : 0
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "BookingDate" : {
             "type" : "string",
@@ -1167,16 +1191,12 @@
             "example" : "Argentina"
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "MinRate" : {
             "type" : "number",
@@ -1332,10 +1352,8 @@
             "example" : "1062"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "Description" : {
             "type" : "string",
@@ -1360,10 +1378,8 @@
         "type" : "object",
         "properties" : {
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "PaxFrom" : {
             "type" : "number",
@@ -1564,16 +1580,12 @@
             "example" : 93377
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "BookingDate" : {
             "type" : "string",
@@ -1663,10 +1675,8 @@
             "example" : 0
           },
           "TourLanguage" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/TourLanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "RackAmount" : {
             "type" : "number",
@@ -1741,10 +1751,8 @@
             "example" : "4496"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "Sgl" : {
             "type" : "number",
@@ -1817,16 +1825,12 @@
             "example" : "TEST_EXPERIENCE_BANK_55"
           },
           "LanguageCode" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/LanguageCodes"
-            }
+            "type" : "string",
+            "example" : "ENG"
           },
           "Currency" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CurrencyCodes"
-            }
+            "type" : "string",
+            "example" : "USD"
           },
           "TotalRackAmount" : {
             "type" : "number",
