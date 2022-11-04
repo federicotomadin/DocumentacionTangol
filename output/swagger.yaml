@@ -172,7 +172,7 @@
     "/GetTourCountries" : {
       "get" : {
         "tags" : [ "Tours" ],
-        "description" : "Countries where there are tours for Tangol.",
+        "description" : "Countries where there are tours for Tangol",
         "parameters" : [ {
           "name" : "token",
           "in" : "header",
@@ -201,7 +201,50 @@
         }
       }
     },
-    "/GetTourDetails/{id}" : {
+    "/GetTourDestinations" : {
+      "get" : {
+        "tags" : [ "Tours" ],
+        "description" : "Destinations where there are tours for Tangol",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "authorization bearer",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "CountryCode",
+          "in" : "query",
+          "required" : false,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TourDestinationsRequest"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "array of destinations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Destinations"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetTourDetails" : {
       "get" : {
         "tags" : [ "Tours" ],
         "description" : "Get tour details for id tour.",
@@ -216,14 +259,15 @@
             "type" : "string"
           }
         }, {
-          "name" : "id",
-          "in" : "path",
-          "description" : "tour id",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "string"
+          "name" : "TourDetails",
+          "in" : "query",
+          "required" : false,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TourDetailsRequest"
+              }
+            }
           }
         } ],
         "responses" : {
@@ -701,6 +745,24 @@
             "items" : {
               "$ref" : "#/components/schemas/ListBlackDate"
             }
+          }
+        }
+      },
+      "TourDetailsRequest" : {
+        "required" : [ "Currency", "LanguageCode", "TourId" ],
+        "type" : "object",
+        "properties" : {
+          "TourId" : {
+            "type" : "number",
+            "example" : 39
+          },
+          "LanguageCode" : {
+            "type" : "string",
+            "example" : "ESP"
+          },
+          "Currency" : {
+            "type" : "string",
+            "example" : "USD"
           }
         }
       },
@@ -1336,6 +1398,38 @@
           "Description" : {
             "type" : "string",
             "example" : "Argentina"
+          },
+          "ToursQty" : {
+            "type" : "number",
+            "example" : 81
+          }
+        }
+      },
+      "TourDestinationsRequest" : {
+        "required" : [ "CountryCode" ],
+        "type" : "object",
+        "properties" : {
+          "CountryCode" : {
+            "type" : "string",
+            "example" : "AR"
+          }
+        }
+      },
+      "Destinations" : {
+        "required" : [ "CountryCode", "Description", "Id", "ToursQty" ],
+        "type" : "object",
+        "properties" : {
+          "Id" : {
+            "type" : "number",
+            "example" : 5
+          },
+          "Description" : {
+            "type" : "string",
+            "example" : "Bariloche"
+          },
+          "CountryCode" : {
+            "type" : "string",
+            "example" : "AR"
           },
           "ToursQty" : {
             "type" : "number",
